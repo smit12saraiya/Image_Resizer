@@ -20,9 +20,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
     try {
       await signInWithGoogle();
-      onClose();
     } catch (err: any) {
-      setError(err.message || 'An error occurred');
+      console.error('Google sign-in error:', err);
+      setError(err.message || 'An error occurred during sign-in. Please try again.');
       setLoading(false);
     }
   };

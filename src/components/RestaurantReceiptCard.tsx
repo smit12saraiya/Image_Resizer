@@ -16,6 +16,11 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
   const serverName = rawData?.server_name;
   const tipAmount = rawData?.tip_amount;
 
+  const formatItems = (itemsString: string) => {
+    if (!itemsString) return itemsString;
+    return itemsString.replace(/\(undefinedx\)/g, '(1x)');
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
       <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4">
@@ -80,7 +85,7 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
             <h5 className="text-sm font-semibold text-gray-700 mb-3">Ordered Items:</h5>
             <div className="bg-gray-50 rounded-lg p-4">
               <pre className="text-sm text-gray-700 whitespace-pre-wrap font-sans leading-relaxed">
-                {expense.items}
+                {formatItems(expense.items)}
               </pre>
             </div>
           </div>
