@@ -111,8 +111,67 @@ function App() {
           </div>
         )}
 
-        
-      
+        <div className="mb-12 max-w-2xl mx-auto">
+          {!user && (
+            <div className="mb-6 p-4 bg-blue-50 border-2 border-blue-200 rounded-xl flex items-center gap-3">
+              <Lock className="w-5 h-5 text-blue-600 flex-shrink-0" />
+              <p className="text-blue-800">
+                <strong>Sign in required:</strong> Please sign in with Google to upload documents
+              </p>
+            </div>
+          )}
+
+          <FileUpload onUpload={handleFileUpload} isLoading={isLoading} />
+
+          {error && (
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <p className="text-red-800">{error}</p>
+            </div>
+          )}
+
+          {isLoading && (
+            <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-3">
+              <Sparkles className="w-5 h-5 text-blue-600 animate-pulse flex-shrink-0" />
+              <p className="text-blue-800">Processing your document with AI...</p>
+            </div>
+          )}
+        </div>
+
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Recent Expenses
+            </h2>
+            {expenses.length > 0 && (
+              <span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                {expenses.length} {expenses.length === 1 ? 'expense' : 'expenses'}
+              </span>
+            )}
+          </div>
+
+          {isInitialLoading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading expenses...</p>
+            </div>
+          ) : expenses.length === 0 ? (
+            <div className="text-center py-16 bg-white rounded-xl border-2 border-dashed border-gray-300">
+              <Receipt className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                No expenses yet
+              </h3>
+              <p className="text-gray-500">
+                Upload your first document to get started
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {expenses.map(renderExpenseCard)}
+            </div>
+          )}
+        </div>
+
         <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       </div>
     </div>
