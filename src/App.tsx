@@ -137,30 +137,7 @@ function App() {
             </div>
           )}
         </div>
-      <div>
-          
-          {isInitialLoading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading expenses...</p>
-            </div>
-          ) : expenses.length === 0 ? (
-            <div className="text-center py-16 bg-white rounded-xl border-2 border-dashed border-gray-300">
-              <Receipt className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                No expenses yet
-              </h3>
-              <p className="text-gray-500">
-                Upload your first document to get started
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {expenses.map(renderExpenseCard)}
-            </div>
-          )}
-        </div>
-
+      
         <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       </div>
     </div>
