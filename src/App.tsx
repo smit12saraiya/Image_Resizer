@@ -162,7 +162,7 @@ function App() {
 
         <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       </div>
-    </div>
+  
   );
 }
 
