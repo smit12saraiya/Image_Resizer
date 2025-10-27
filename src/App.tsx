@@ -5,9 +5,11 @@ import { RestaurantReceiptCard } from './components/RestaurantReceiptCard';
 import { GroceryReceiptCard } from './components/GroceryReceiptCard';
 import { GenericExpenseCard } from './components/GenericExpenseCard';
 import { AuthModal } from './components/AuthModal';
+import { Header } from './components/Header';
+import { ExpenseCarousel } from './components/ExpenseCarousel';
 import { uploadExpenseDocument, saveExpenseToDatabase, getAllExpenses } from './services/expenseService';
 import { Expense } from './lib/supabase';
-import { Receipt, AlertCircle, Sparkles, LogIn, LogOut, User } from 'lucide-react';
+import { Receipt, AlertCircle, Sparkles, Lock } from 'lucide-react';
 import { useAuth } from './contexts/AuthContext';
 
 function App() {
@@ -34,6 +36,12 @@ function App() {
   };
 
   const handleFileUpload = async (file: File) => {
+    if (!user) {
+      setError('Please sign in to upload documents');
+      setIsAuthModalOpen(true);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
@@ -63,17 +71,11 @@ function App() {
     }
   };
 
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-    } catch (error) {
-      console.error('Sign out error:', error);
-    }
-  };
+  const recentExpenses = expenses.slice(0, 5);
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
@@ -83,50 +85,42 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Receipt className="w-12 h-12 text-blue-600" />
-            <h1 className="text-5xl font-bold text-gray-900">
-              Multi-Channel Expense Tracker
-            </h1>
-          </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Upload your receipts and invoices to automatically extract and organize expense data.
-            Supports documents from Telegram, webhooks, and manual uploads.
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.1),transparent_50%)] pointer-events-none"></div>
 
-          <div className="mt-6 flex items-center justify-center gap-4">
-            {user ? (
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-lg">
-                  <User className="w-5 h-5 text-blue-600" />
-                  <span className="text-sm font-medium text-blue-900">
-                    {user.email}
-                  </span>
-                </div>
-                <button
-                  onClick={handleSignOut}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <LogOut className="w-5 h-5" />
-                  <span className="font-medium">Sign Out</span>
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setIsAuthModalOpen(true)}
-                className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-              >
-                <LogIn className="w-5 h-5" />
-                Sign In
-              </button>
-            )}
-          </div>
+      <Header onSignInClick={() => setIsAuthModalOpen(true)} />
+
+      <div className="relative max-w-7xl mx-auto px-4 py-8">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-gray-900 mb-3">
+            Track Your Expenses Effortlessly
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Upload receipts and invoices to automatically extract and organize expense data with AI
+          </p>
         </div>
 
-        <div className="mb-12">
+        {recentExpenses.length > 0 && (
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              Recent Expenses
+            </h3>
+            <div className="max-w-3xl mx-auto">
+              <ExpenseCarousel expenses={recentExpenses} />
+            </div>
+          </div>
+        )}
+
+        <div className="mb-12 max-w-2xl mx-auto">
+          {!user && (
+            <div className="mb-6 p-4 bg-blue-50 border-2 border-blue-200 rounded-xl flex items-center gap-3">
+              <Lock className="w-5 h-5 text-blue-600 flex-shrink-0" />
+              <p className="text-blue-800">
+                <strong>Sign in required:</strong> Please sign in with Google to upload documents
+              </p>
+            </div>
+          )}
+
           <FileUpload onUpload={handleFileUpload} isLoading={isLoading} />
 
           {error && (
