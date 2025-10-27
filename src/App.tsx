@@ -111,32 +111,7 @@ function App() {
           </div>
         )}
 
-        <div className="mb-12 max-w-2xl mx-auto">
-          {!user && (
-            <div className="mb-6 p-4 bg-blue-50 border-2 border-blue-200 rounded-xl flex items-center gap-3">
-              <Lock className="w-5 h-5 text-blue-600 flex-shrink-0" />
-              <p className="text-blue-800">
-                <strong>Sign in required:</strong> Please sign in with Google to upload documents
-              </p>
-            </div>
-          )}
-
-          <FileUpload onUpload={handleFileUpload} isLoading={isLoading} />
-
-          {error && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-              <p className="text-red-800">{error}</p>
-            </div>
-          )}
-
-          {isLoading && (
-            <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-3">
-              <Sparkles className="w-5 h-5 text-blue-600 animate-pulse flex-shrink-0" />
-              <p className="text-blue-800">Processing your document with AI...</p>
-            </div>
-          )}
-        </div>
+        
       
         <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       </div>
