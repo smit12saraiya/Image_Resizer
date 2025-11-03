@@ -11,6 +11,7 @@ import { uploadExpenseDocument, saveExpenseToDatabase, getAllExpenses } from './
 import { Expense } from './lib/supabase';
 import { Receipt, AlertCircle, Sparkles, Lock } from 'lucide-react';
 import { useAuth } from './contexts/AuthContext';
+import { sampleExpenses } from './data/sampleExpenses';
 
 function App() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -21,8 +22,13 @@ function App() {
   const { user, signOut, loading: authLoading } = useAuth();
 
   useEffect(() => {
-    loadExpenses();
-  }, []);
+    if (user) {
+      loadExpenses();
+    } else {
+      setExpenses(sampleExpenses as Expense[]);
+      setIsInitialLoading(false);
+    }
+  }, [user]);
 
   const loadExpenses = async () => {
     try {
