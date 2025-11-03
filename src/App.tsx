@@ -9,7 +9,7 @@ import { Header } from './components/Header';
 import { ExpenseCarousel } from './components/ExpenseCarousel';
 import { uploadExpenseDocument, saveExpenseToDatabase, getAllExpenses } from './services/expenseService';
 import { Expense } from './lib/supabase';
-import { Receipt, AlertCircle, Sparkles, Lock } from 'lucide-react';
+import { Receipt, AlertCircle, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAuth } from './contexts/AuthContext';
 import { sampleExpenses } from './data/sampleExpenses';
 
@@ -19,7 +19,9 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const { user, signOut, loading: authLoading } = useAuth();
+  const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
     if (user) {
@@ -77,6 +79,10 @@ function App() {
     }
   };
 
+  const totalPages = Math.ceil(expenses.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentExpenses = expenses.slice(startIndex, endIndex);
   const recentExpenses = expenses.slice(0, 5);
 
   if (authLoading) {
@@ -145,6 +151,53 @@ function App() {
             <p className="text-gray-500">
               Sign in and upload your first document to get started
             </p>
+          </div>
+        ) : user ? (
+          <div className="mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              Your Expenses
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {currentExpenses.map((expense) => renderExpenseCard(expense))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="mt-8 flex items-center justify-center gap-4">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                  Previous
+                </button>
+
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                        currentPage === page
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <div className="mb-12">
