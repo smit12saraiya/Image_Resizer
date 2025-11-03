@@ -100,6 +100,26 @@ function App() {
           </p>
         </div>
 
+        {user && (
+          <div className="mb-12 max-w-2xl mx-auto">
+            <FileUpload onUpload={handleFileUpload} isLoading={isLoading} />
+
+            {error && (
+              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+                <p className="text-red-800">{error}</p>
+              </div>
+            )}
+
+            {isLoading && (
+              <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-3">
+                <Sparkles className="w-5 h-5 text-blue-600 animate-pulse flex-shrink-0" />
+                <p className="text-blue-800">Processing your document with AI...</p>
+              </div>
+            )}
+          </div>
+        )}
+
         {isInitialLoading ? (
           <div className="text-center py-12">
             <div className="relative inline-flex">
