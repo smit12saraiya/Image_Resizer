@@ -16,21 +16,28 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 });
 
 export interface Expense {
-  id: string;
-  category: string;
+  id?: string;
+  created_at?: string;
   source: string;
-  status: string;
+  category: string;
+  status?: string;
   vendor_name?: string;
-  date?: string;
-  due_date?: string;
-  image_url?: string;
-  items?: string;
+  receipt_date?: string;
+  receipt_time?: string;
   subtotal?: number;
   tax_amount?: number;
-  total_amount?: number;
+  tip_amount?: number;
+  total_amount: number;
   currency?: string;
-  payment_terms?: string;
-  tags?: string;
-  raw_data?: any;
-  created_at: string;
+  payment_method?: string;
+  items?: any[];
+  order_number?: string;
+  server_name?: string;
+  table_number?: string;
+  notes?: string;
+  image_quality?: string;
+  confidence_score?: string;
+  image_url: string;
+  file_id?: string;
+  user_id?: string;
 }
