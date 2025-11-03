@@ -7,7 +7,6 @@ export const sampleExpenses = [
     vendor_name: 'TechCorp Solutions',
     date: '2024-10-15',
     due_date: '2024-11-15',
-    image_url: 'https://images.pexels.com/photos/6863332/pexels-photo-6863332.jpeg?auto=compress&cs=tinysrgb&w=800',
     items: JSON.stringify([
       { description: 'Web Development Services', quantity: 1, unit_price: 4500, total: 4500 },
       { description: 'UI/UX Design Consultation', quantity: 3, unit_price: 800, total: 2400 },
