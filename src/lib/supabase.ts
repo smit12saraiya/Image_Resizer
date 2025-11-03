@@ -36,7 +36,13 @@ export interface Expense {
   table_number?: string;
   notes?: string;
   image_quality?: string;
-  confidence_score?: string;
+  invoice_number?: string;
+  due_date?: string;
+  payment_terms?: string;
+  loyalty_number?: string;
+  cashier?: string;
+  register_number?: string;
+  items_count?: string;
   image_url: string;
   file_id?: string;
   user_id?: string;
