@@ -23,7 +23,6 @@ export async function uploadExpenseDocument(file: File) {
     }
 
     const data = await response.json();
-    console.log('data-- ' + data)
     return data;
   } catch (error: any) {
     clearTimeout(timeoutId);
