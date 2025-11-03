@@ -29,7 +29,6 @@ export const sampleExpenses = [
     status: 'PROCESSED',
     vendor_name: 'The Garden Bistro',
     date: '2024-10-18',
-    image_url: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800',
     items: JSON.stringify([
       { name: 'Grilled Salmon', price: 28.50, quantity: 2 },
       { name: 'Caesar Salad', price: 12.00, quantity: 2 },
@@ -51,7 +50,6 @@ export const sampleExpenses = [
     status: 'PROCESSED',
     vendor_name: 'Fresh Market',
     date: '2024-10-20',
-    image_url: 'https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=800',
     items: JSON.stringify([
       { name: 'Organic Apples', price: 5.99, quantity: 1 },
       { name: 'Whole Grain Bread', price: 4.50, quantity: 2 },
@@ -83,7 +81,6 @@ export const sampleExpenses = [
     vendor_name: 'Cloud Services Inc',
     date: '2024-10-22',
     due_date: '2024-11-22',
-    image_url: 'https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=800',
     items: JSON.stringify([
       { description: 'Server Hosting - Premium', quantity: 1, unit_price: 299, total: 299 },
       { description: 'SSL Certificate', quantity: 1, unit_price: 49, total: 49 },
@@ -106,7 +103,6 @@ export const sampleExpenses = [
     status: 'PROCESSED',
     vendor_name: 'Cafe Arabica',
     date: '2024-10-23',
-    image_url: 'https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg?auto=compress&cs=tinysrgb&w=800',
     items: JSON.stringify([
       { name: 'Cappuccino', price: 4.50, quantity: 2 },
       { name: 'Croissant', price: 3.75, quantity: 2 },
