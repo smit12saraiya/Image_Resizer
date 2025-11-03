@@ -23,6 +23,7 @@ export async function uploadExpenseDocument(file: File) {
     }
 
     const data = await response.json();
+    console.log('data-- ' + data)
     return data;
   } catch (error: any) {
     clearTimeout(timeoutId);
@@ -35,7 +36,6 @@ export async function uploadExpenseDocument(file: File) {
 
 export async function saveExpenseToDatabase(expenseData: any, userId: string) {
   const expense = Array.isArray(expenseData) ? expenseData[0] : expenseData;
-
   const totalAmount = expense.total_amount || expense.total ||
     (expense.subtotal || 0) + (expense.tax_amount || expense.tax || 0);
 
