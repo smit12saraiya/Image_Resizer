@@ -47,7 +47,7 @@ function App() {
 
     try {
       const result = await uploadExpenseDocument(file);
-      const savedExpense = await saveExpenseToDatabase(result);
+      const savedExpense = await saveExpenseToDatabase(result, user.id);
       setExpenses(prev => [savedExpense, ...prev]);
     } catch (err) {
       console.error('Upload error:', err);

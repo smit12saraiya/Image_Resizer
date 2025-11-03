@@ -33,7 +33,7 @@ export async function uploadExpenseDocument(file: File) {
   }
 }
 
-export async function saveExpenseToDatabase(expenseData: any) {
+export async function saveExpenseToDatabase(expenseData: any, userId: string) {
   const expense = Array.isArray(expenseData) ? expenseData[0] : expenseData;
 
   const totalAmount = expense.total_amount || expense.total ||
@@ -47,6 +47,7 @@ export async function saveExpenseToDatabase(expenseData: any) {
   const { data, error } = await supabase
     .from('expenses')
     .insert({
+      user_id: userId,
       category: expense.category,
       source: expense.source || 'Webhook/Form',
       status: expense.status || 'PROCESSED',
