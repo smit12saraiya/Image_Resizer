@@ -22,7 +22,8 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+      con>
       <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
