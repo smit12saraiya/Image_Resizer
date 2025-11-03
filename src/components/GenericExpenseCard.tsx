@@ -95,8 +95,7 @@ export function GenericExpenseCard({ expense }: GenericExpenseCardProps) {
           </div>
         )}
 
-        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-          <span>Source: {expense.source}</span>
+        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-end text-xs text-gray-500">
           <span>{new Date(expense.created_at).toLocaleDateString()}</span>
         </div>
       </div>

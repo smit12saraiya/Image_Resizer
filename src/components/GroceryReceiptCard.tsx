@@ -7,7 +7,12 @@ interface GroceryReceiptCardProps {
 
 export function GroceryReceiptCard({ expense }: GroceryReceiptCardProps) {
   const rawData = expense.raw_data;
-  const items = rawData?.items || [];
+  let items = [];
+  try {
+    items = expense.items ? JSON.parse(expense.items) : (rawData?.items || []);
+  } catch {
+    items = rawData?.items || [];
+  }
   const totalItemsCount = rawData?.total_items_count || items.length;
 
   return (
@@ -54,22 +59,27 @@ export function GroceryReceiptCard({ expense }: GroceryReceiptCardProps) {
         {items && items.length > 0 && (
           <div className="mb-6">
             <h5 className="text-sm font-semibold text-gray-700 mb-3">Items Purchased:</h5>
-            <div className="bg-gray-50 rounded-lg p-4 max-h-64 overflow-y-auto">
-              <div className="space-y-2">
-                {items.map((item: any, index: number) => (
-                  <div key={index} className="flex justify-between items-start text-sm py-2 border-b border-gray-200 last:border-0">
-                    <div className="flex-1">
-                      <span className="font-medium text-gray-900">{item.name}</span>
-                      {item.quantity && item.quantity > 1 && (
-                        <span className="text-gray-500 ml-2">x{item.quantity}</span>
-                      )}
-                    </div>
-                    <span className="font-medium text-gray-900 ml-4">
-                      {expense.currency}{typeof item.subtotal === 'number' ? item.subtotal.toFixed(2) : item.price?.toFixed(2)}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="overflow-x-auto max-h-80 overflow-y-auto">
+              <table className="w-full text-sm">
+                <thead className="sticky top-0 bg-white">
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-2 px-3 text-gray-600 font-medium">Item</th>
+                    <th className="text-right py-2 px-3 text-gray-600 font-medium">Qty</th>
+                    <th className="text-right py-2 px-3 text-gray-600 font-medium">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map((item: any, index: number) => (
+                    <tr key={index} className="border-b border-gray-100">
+                      <td className="py-2 px-3 text-gray-900">{item.name}</td>
+                      <td className="text-right py-2 px-3 text-gray-700">{item.quantity || 1}</td>
+                      <td className="text-right py-2 px-3 text-gray-900 font-medium">
+                        {expense.currency}{(typeof item.subtotal === 'number' ? item.subtotal : item.price)?.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
@@ -112,8 +122,7 @@ export function GroceryReceiptCard({ expense }: GroceryReceiptCardProps) {
           </div>
         )}
 
-        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-          <span>Source: {expense.source}</span>
+        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-end text-xs text-gray-500">
           <span>{new Date(expense.created_at).toLocaleDateString()}</span>
         </div>
       </div>

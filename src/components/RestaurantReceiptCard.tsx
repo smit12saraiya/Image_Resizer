@@ -83,10 +83,34 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
         {expense.items && (
           <div className="mb-6">
             <h5 className="text-sm font-semibold text-gray-700 mb-3">Ordered Items:</h5>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <pre className="text-sm text-gray-700 whitespace-pre-wrap font-sans leading-relaxed">
-                {formatItems(expense.items)}
-              </pre>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-2 px-3 text-gray-600 font-medium">Item</th>
+                    <th className="text-right py-2 px-3 text-gray-600 font-medium">Qty</th>
+                    <th className="text-right py-2 px-3 text-gray-600 font-medium">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(() => {
+                    try {
+                      const items = JSON.parse(expense.items);
+                      return items.map((item: any, index: number) => (
+                        <tr key={index} className="border-b border-gray-100">
+                          <td className="py-2 px-3 text-gray-900">{item.name}</td>
+                          <td className="text-right py-2 px-3 text-gray-700">{item.quantity}</td>
+                          <td className="text-right py-2 px-3 text-gray-900 font-medium">
+                            {expense.currency}{item.price.toFixed(2)}
+                          </td>
+                        </tr>
+                      ));
+                    } catch {
+                      return null;
+                    }
+                  })()}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
@@ -135,8 +159,7 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
           </div>
         )}
 
-        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
-          <span>Source: {expense.source}</span>
+        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-end text-xs text-gray-500">
           <span>{new Date(expense.created_at).toLocaleDateString()}</span>
         </div>
       </div>
