@@ -82,7 +82,7 @@ export async function getAllExpenses() {
   }
 
   const { data, error } = await supabase
-    .from('expenses')
+    .from('receipts')
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false });
