@@ -75,9 +75,16 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
 }
 
 export async function getAllExpenses() {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return [];
+  }
+
   const { data, error } = await supabase
     .from('expenses')
     .select('*')
+    .eq('user_id', user.id)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -85,5 +92,5 @@ export async function getAllExpenses() {
     throw new Error('Failed to fetch expenses');
   }
 
-  return data;
+  return data || [];
 }

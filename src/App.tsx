@@ -36,8 +36,11 @@ function App() {
     try {
       const data = await getAllExpenses();
       setExpenses(data);
+      setError(null);
     } catch (err) {
       console.error('Error loading expenses:', err);
+      setError('Failed to load expenses. Please check your connection.');
+      setExpenses([]);
     } finally {
       setIsInitialLoading(false);
     }
@@ -112,16 +115,18 @@ function App() {
           </p>
         </div>
 
+        {error && !isLoading && (
+          <div className="mb-6 max-w-2xl mx-auto">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <p className="text-red-800">{error}</p>
+            </div>
+          </div>
+        )}
+
         {user && (
           <div className="mb-12 max-w-2xl mx-auto">
             <FileUpload onUpload={handleFileUpload} isLoading={isLoading} />
-
-            {error && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
-                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-                <p className="text-red-800">{error}</p>
-              </div>
-            )}
 
             {isLoading && (
               <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-3">
@@ -146,10 +151,10 @@ function App() {
           <div className="text-center py-16 bg-white/80 backdrop-blur-sm rounded-xl border-2 border-dashed border-gray-300">
             <Receipt className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-700 mb-2">
-              No expenses yet
+              {user ? 'No expenses yet' : 'No expenses to display'}
             </h3>
             <p className="text-gray-500">
-              Sign in and upload your first document to get started
+              {user ? 'Upload your first document to get started' : 'Sign in and upload your first document to get started'}
             </p>
           </div>
         ) : user ? (
