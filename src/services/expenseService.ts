@@ -44,7 +44,7 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
   const currency = expense.currency || expense.Currency || '$';
 
   const { data, error } = await supabase
-    .from('expenses')
+    .from('receipts')
     .insert({
       user_id: userId,
       category: expense.category,
