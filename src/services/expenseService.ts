@@ -51,7 +51,7 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
       source: expense.source || 'Webhook/Form',
       status: expense.status || 'PROCESSED',
       vendor_name: vendorName,
-      date: date,
+      receipt_date: date,
       due_date: expense.due_date,
       image_url: expense.image_url,
       items: expense.items,
@@ -60,8 +60,6 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
       total_amount: totalAmount,
       currency: currency,
       payment_terms: expense.payment_terms,
-      tags: expense.tags,
-      raw_data: expense,
     })
     .select()
     .single();
