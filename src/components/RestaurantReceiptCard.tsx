@@ -7,8 +7,6 @@ interface RestaurantReceiptCardProps {
 
 export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
   const rawData = expense.raw_data;
-  console.log('rawData', expense)
-  console.log('expense.total_amount', expense.total_amount)
   const totalAmount = expense.total_amount || rawData?.total_amount ||
     (expense.subtotal || 0) + (expense.tax_amount || 0);
 
@@ -100,7 +98,6 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
                   {(() => {
                     try {
                       const items = JSON.parse(expense.items);
-                      console.log('rest',items)
                       return items.map((item: any, index: number) => (
                         <tr key={index} className="border-b border-gray-100">
                           <td className="py-2 px-3 text-gray-900">{item.name}</td>
