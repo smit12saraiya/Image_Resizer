@@ -7,9 +7,10 @@ import { deleteExpense } from '../services/expenseService';
 interface GroceryReceiptCardProps {
   expense: Expense;
   onDelete?: () => void;
+  showDelete?: boolean;
 }
 
-export function GroceryReceiptCard({ expense, onDelete }: GroceryReceiptCardProps) {
+export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: GroceryReceiptCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -49,13 +50,15 @@ export function GroceryReceiptCard({ expense, onDelete }: GroceryReceiptCardProp
             <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white">
               {expense.status}
             </span>
-            <button
-              onClick={() => setShowDeleteModal(true)}
-              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-              title="Delete receipt"
-            >
-              <Trash2 className="w-5 h-5 text-white" />
-            </button>
+            {showDelete && (
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                title="Delete receipt"
+              >
+                <Trash2 className="w-5 h-5 text-white" />
+              </button>
+            )}
           </div>
         </div>
       </div>

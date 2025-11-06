@@ -75,14 +75,14 @@ function App() {
   const renderExpenseCard = (expense: Expense) => {
     switch (expense.category) {
       case 'INVOICE':
-        return <InvoiceCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} />;
+        return <InvoiceCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} showDelete={!!user} />;
       case 'RESTAURANT':
       case 'RESTAURANT_RECEIPT':
-        return <RestaurantReceiptCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} />;
+        return <RestaurantReceiptCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} showDelete={!!user} />;
       case 'GROCERY':
-        return <GroceryReceiptCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} />;
+        return <GroceryReceiptCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} showDelete={!!user} />;
       default:
-        return <GenericExpenseCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} />;
+        return <GenericExpenseCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} showDelete={!!user} />;
     }
   };
 
@@ -94,36 +94,50 @@ function App() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-300">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.1),transparent_50%)] pointer-events-none"></div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.15),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.15),transparent_50%)] pointer-events-none"></div>
 
       <Header onSignInClick={() => setIsAuthModalOpen(true)} />
 
       <div className="relative max-w-7xl mx-auto px-4 py-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-3">
+          <h2 className="text-4xl font-bold text-white mb-3">
             Track Your Expenses Effortlessly
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
             Upload receipts and invoices to automatically extract and organize expense data with AI
           </p>
+          {!user && (
+            <div className="mt-6 p-4 bg-blue-500/20 border border-blue-400/30 rounded-lg max-w-2xl mx-auto backdrop-blur-sm">
+              <p className="text-blue-200 text-base">
+                Please{' '}
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="font-semibold text-blue-300 hover:text-blue-100 underline transition-colors"
+                >
+                  sign in
+                </button>
+                {' '}to upload and manage your documents
+              </p>
+            </div>
+          )}
         </div>
 
         {error && !isLoading && (
           <div className="mb-6 max-w-2xl mx-auto">
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-              <p className="text-red-800">{error}</p>
+            <div className="p-4 bg-red-500/20 border border-red-400/30 rounded-lg flex items-center gap-3 backdrop-blur-sm">
+              <AlertCircle className="w-5 h-5 text-red-300 flex-shrink-0" />
+              <p className="text-red-200">{error}</p>
             </div>
           </div>
         )}
@@ -133,9 +147,9 @@ function App() {
             <FileUpload onUpload={handleFileUpload} isLoading={isLoading} />
 
             {isLoading && (
-              <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-3">
-                <Sparkles className="w-5 h-5 text-blue-600 animate-pulse flex-shrink-0" />
-                <p className="text-blue-800">Processing your document with AI...</p>
+              <div className="mt-4 p-4 bg-blue-500/20 border border-blue-400/30 rounded-lg flex items-center gap-3 backdrop-blur-sm">
+                <Sparkles className="w-5 h-5 text-blue-300 animate-pulse flex-shrink-0" />
+                <p className="text-blue-200">Processing your document with AI...</p>
               </div>
             )}
           </div>
@@ -144,26 +158,26 @@ function App() {
         {isInitialLoading ? (
           <div className="text-center py-12">
             <div className="relative inline-flex">
-              <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-600 border-t-blue-500"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <Receipt className="w-8 h-8 text-blue-600 animate-pulse" />
+                <Receipt className="w-8 h-8 text-blue-400 animate-pulse" />
               </div>
             </div>
-            <p className="text-gray-600 mt-4 text-lg font-medium">Loading expenses...</p>
+            <p className="text-gray-300 mt-4 text-lg font-medium">Loading expenses...</p>
           </div>
         ) : expenses.length === 0 ? (
-          <div className="text-center py-16 bg-white/80 backdrop-blur-sm rounded-xl border-2 border-dashed border-gray-300">
-            <Receipt className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">
+          <div className="text-center py-16 bg-slate-800/50 backdrop-blur-sm rounded-xl border-2 border-dashed border-gray-600">
+            <Receipt className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-200 mb-2">
               {user ? 'No expenses yet' : 'No expenses to display'}
             </h3>
-            <p className="text-gray-500">
+            <p className="text-gray-400">
               {user ? 'Upload your first document to get started' : 'Sign in and upload your first document to get started'}
             </p>
           </div>
         ) : user ? (
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <h3 className="text-2xl font-bold text-white mb-6">
               Your Expenses
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -175,7 +189,7 @@ function App() {
                 <button
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-700 border border-gray-600 rounded-lg hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-gray-200"
                 >
                   <ChevronLeft className="w-5 h-5" />
                   Previous
@@ -189,7 +203,7 @@ function App() {
                       className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                         currentPage === page
                           ? 'bg-blue-600 text-white'
-                          : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                          : 'bg-slate-700 border border-gray-600 text-gray-200 hover:bg-slate-600'
                       }`}
                     >
                       {page}
@@ -200,7 +214,7 @@ function App() {
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-700 border border-gray-600 rounded-lg hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-gray-200"
                 >
                   Next
                   <ChevronRight className="w-5 h-5" />
@@ -210,11 +224,11 @@ function App() {
           </div>
         ) : (
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">
               Recent Expenses
             </h3>
             <div className="max-w-3xl mx-auto">
-              <ExpenseCarousel expenses={recentExpenses} onExpenseDeleted={handleExpenseDeleted} />
+              <ExpenseCarousel expenses={recentExpenses} onExpenseDeleted={handleExpenseDeleted} showDelete={false} />
             </div>
           </div>
         )}

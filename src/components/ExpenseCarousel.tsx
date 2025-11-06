@@ -9,9 +9,10 @@ import { GenericExpenseCard } from './GenericExpenseCard';
 interface ExpenseCarouselProps {
   expenses: Expense[];
   onExpenseDeleted?: () => void;
+  showDelete?: boolean;
 }
 
-export function ExpenseCarousel({ expenses, onExpenseDeleted }: ExpenseCarouselProps) {
+export function ExpenseCarousel({ expenses, onExpenseDeleted, showDelete = false }: ExpenseCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -29,14 +30,14 @@ export function ExpenseCarousel({ expenses, onExpenseDeleted }: ExpenseCarouselP
   const renderExpenseCard = (expense: Expense) => {
     switch (expense.category) {
       case 'INVOICE':
-        return <InvoiceCard expense={expense} onDelete={onExpenseDeleted} />;
+        return <InvoiceCard expense={expense} onDelete={onExpenseDeleted} showDelete={showDelete} />;
       case 'RESTAURANT':
       case 'RESTAURANT_RECEIPT':
-        return <RestaurantReceiptCard expense={expense} onDelete={onExpenseDeleted} />;
+        return <RestaurantReceiptCard expense={expense} onDelete={onExpenseDeleted} showDelete={showDelete} />;
       case 'GROCERY':
-        return <GroceryReceiptCard expense={expense} onDelete={onExpenseDeleted} />;
+        return <GroceryReceiptCard expense={expense} onDelete={onExpenseDeleted} showDelete={showDelete} />;
       default:
-        return <GenericExpenseCard expense={expense} onDelete={onExpenseDeleted} />;
+        return <GenericExpenseCard expense={expense} onDelete={onExpenseDeleted} showDelete={showDelete} />;
     }
   };
 
