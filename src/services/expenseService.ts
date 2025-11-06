@@ -39,9 +39,10 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
     (expense.subtotal || 0) + (expense.tax_amount || expense.tax || 0);
 
   const vendorName = expense.vendor_name || expense.store_name || expense.restaurant_name;
-  const date = expense.date || expense.receipt_date;
+  const date = expense.date || expense.receipt_date || expense.invoice_date;
   const taxAmount = expense.tax_amount || expense.tax;
   const currency = expense.currency || expense.Currency || '$';
+  const due_date = expense.due_date || '';
 
   const { data, error } = await supabase
     .from('receipts')
@@ -55,6 +56,8 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
       due_date: expense.due_date,
       image_url: expense.image_url,
       items: expense.items,
+      invoice_date: date,
+      due_date: due_date,
       subtotal: expense.subtotal,
       tax_amount: taxAmount,
       total_amount: totalAmount,
