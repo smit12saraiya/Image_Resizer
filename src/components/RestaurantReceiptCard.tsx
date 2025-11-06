@@ -17,8 +17,8 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
   const orderNumber = rawData?.order_number;
   const serverName = rawData?.server_name;
   const tipAmount = rawData?.tip_amount;
-  console.log('expense', JSON.parse(expense))
   console.log('restaurantName', expense.restaurantName)
+  console.log('expense.vendor_name', expense.vendor_name)
 
   const formatItems = (itemsString: string) => {
     if (!itemsString) return itemsString;
