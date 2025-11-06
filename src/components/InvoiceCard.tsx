@@ -32,7 +32,7 @@ export function InvoiceCard({ expense }: InvoiceCardProps) {
             </h4>
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <Calendar className="w-4 h-4" />
-              <span>{expense.date}</span>
+              <span>{expense.invoice_date}</span>
             </div>
           </div>
           {expense.image_url && (
