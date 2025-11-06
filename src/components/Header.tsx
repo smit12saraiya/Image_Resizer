@@ -22,26 +22,26 @@ export function Header({ onSignInClick }: HeaderProps) {
   };
 
   return (
-    <header className="bg-slate-800/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50">
+    <header className="bg-[#4a4458]/90 backdrop-blur-sm border-b border-gray-700/50 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Receipt className="w-8 h-8 text-blue-400" />
-            <h1 className="text-2xl font-bold text-white">Expense Tracker</h1>
+            <Receipt className="w-8 h-8 text-orange-400" />
+            <h1 className="text-2xl font-bold text-white">ReceiptIQ</h1>
           </div>
 
           <div className="flex items-center gap-3">
             {user ? (
               <>
-                <div className="flex items-center gap-2 px-3 py-2 bg-blue-500/20 border border-blue-400/30 rounded-lg backdrop-blur-sm">
-                  <User className="w-5 h-5 text-blue-300" />
-                  <span className="text-sm font-medium text-blue-200">
+                <div className="flex items-center gap-2 px-3 py-2 bg-orange-500/20 border border-orange-400/30 rounded-lg backdrop-blur-sm">
+                  <User className="w-5 h-5 text-orange-300" />
+                  <span className="text-sm font-medium text-orange-200">
                     {user.email}
                   </span>
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center gap-2 px-4 py-2 bg-slate-700 border border-gray-600 rounded-lg hover:bg-slate-600 transition-colors text-gray-200"
+                  className="flex items-center gap-2 px-4 py-2 bg-[#5a5167] border border-gray-600 rounded-lg hover:bg-[#4a4458] transition-colors text-gray-200"
                 >
                   <LogOut className="w-5 h-5" />
                   <span className="font-medium">Sign Out</span>
@@ -50,7 +50,7 @@ export function Header({ onSignInClick }: HeaderProps) {
             ) : (
               <button
                 onClick={handleGoogleSignIn}
-                className="flex items-center gap-3 px-6 py-2.5 bg-slate-700 border-2 border-gray-600 hover:border-gray-500 text-gray-200 font-semibold rounded-lg transition-all shadow-sm hover:shadow"
+                className="flex items-center gap-3 px-6 py-2.5 bg-orange-500/20 border-2 border-orange-400/40 hover:border-orange-400/60 text-orange-100 font-semibold rounded-lg transition-all shadow-sm hover:shadow"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path

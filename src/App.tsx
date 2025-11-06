@@ -94,9 +94,9 @@ function App() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#4a4458] via-[#5a5167] to-[#3d3848] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400 mx-auto mb-4"></div>
           <p className="text-gray-300">Loading...</p>
         </div>
       </div>
@@ -104,8 +104,8 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.15),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.15),transparent_50%)] pointer-events-none"></div>
+    <div className="min-h-screen bg-gradient-to-br from-[#4a4458] via-[#5a5167] to-[#3d3848] relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(234,158,110,0.15),transparent_40%),radial-gradient(circle_at_80%_90%,rgba(234,158,110,0.12),transparent_40%)] pointer-events-none"></div>
 
       <Header onSignInClick={() => setIsAuthModalOpen(true)} />
 
@@ -118,16 +118,14 @@ function App() {
             Upload receipts and invoices to automatically extract and organize expense data with AI
           </p>
           {!user && (
-            <div className="mt-6 p-4 bg-blue-500/20 border border-blue-400/30 rounded-lg max-w-2xl mx-auto backdrop-blur-sm">
-              <p className="text-blue-200 text-base">
-                Please{' '}
+            <div className="mt-6 p-4 bg-orange-500/20 border border-orange-400/30 rounded-lg max-w-2xl mx-auto backdrop-blur-sm">
+              <p className="text-orange-100 text-base">
                 <button
                   onClick={() => setIsAuthModalOpen(true)}
-                  className="font-semibold text-blue-300 hover:text-blue-100 underline transition-colors"
+                  className="font-semibold text-orange-200 hover:text-white underline transition-colors"
                 >
-                  sign in
+                  Get Started with Smart Tracking
                 </button>
-                {' '}to upload and manage your documents
               </p>
             </div>
           )}
