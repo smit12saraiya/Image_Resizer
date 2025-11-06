@@ -102,21 +102,32 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-y-auto">
-      <div
-        className="fixed inset-0 -z-10"
-        style={{
-          backgroundImage: "url('/ChatGPT Image Nov 6, 2025, 03_30_07 PM.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed'
-        }}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-[#4a4458] via-[#5a5167] to-[#3d3848] relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(234,158,110,0.15),transparent_40%),radial-gradient(circle_at_80%_90%,rgba(234,158,110,0.12),transparent_40%)] pointer-events-none"></div>
 
       <Header onSignInClick={() => setIsAuthModalOpen(true)} />
 
-      <div className="relative max-w-7xl mx-auto px-4 py-8 min-h-screen">
+      <div className="relative max-w-7xl mx-auto px-4 py-8">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-white mb-3">
+            Track Your Expenses Effortlessly
+          </h2>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Upload receipts and invoices to automatically extract and organize expense data with AI
+          </p>
+          {!user && (
+            <div className="mt-6 p-4 bg-orange-500/20 border border-orange-400/30 rounded-lg max-w-2xl mx-auto backdrop-blur-sm">
+              <p className="text-orange-100 text-base">
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="font-semibold text-orange-200 hover:text-white underline transition-colors"
+                >
+                  Get Started with Smart Tracking
+                </button>
+              </p>
+            </div>
+          )}
+        </div>
 
         {error && !isLoading && (
           <div className="mb-6 max-w-2xl mx-auto">
@@ -207,7 +218,26 @@ function App() {
               </div>
             )}
           </div>
-        ) : null}
+        ) : (
+          <div className="mb-12">
+            <div className="max-w-5xl mx-auto">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" onClick={() => setIsAuthModalOpen(true)}>
+                <img
+                  src="/ChatGPT Image Nov 6, 2025, 03_30_07 PM.png"
+                  alt="ReceiptIQ - Track Expenses On The Go"
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+                  <button
+                    className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold rounded-lg transition-all shadow-2xl group-hover:scale-105"
+                  >
+                    Get Started with Smart Tracking
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       </div>
