@@ -8,6 +8,8 @@ interface InvoiceCardProps {
 export function InvoiceCard({ expense }: InvoiceCardProps) {
   const totalAmount = expense.total_amount ||
     (expense.subtotal || 0) + (expense.tax_amount || 0);
+  console.log('Expense' + expense)
+  console.log('smit')
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
