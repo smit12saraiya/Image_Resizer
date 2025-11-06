@@ -51,7 +51,7 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
       category: expense.category,
       source: expense.source || 'Webhook/Form',
       status: expense.status || 'PROCESSED',
-      vendor_name: vendorName,
+      vendor_name: expense,
       receipt_date: date,
       due_date: expense.due_date,
       image_url: expense.image_url,
