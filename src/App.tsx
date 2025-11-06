@@ -102,11 +102,21 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ backgroundImage: "url('/ChatGPT Image Nov 6, 2025, 03_30_07 PM.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+    <div className="min-h-screen relative overflow-y-auto">
+      <div
+        className="fixed inset-0 -z-10"
+        style={{
+          backgroundImage: "url('/ChatGPT Image Nov 6, 2025, 03_30_07 PM.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      />
 
       <Header onSignInClick={() => setIsAuthModalOpen(true)} />
 
-      <div className="relative max-w-7xl mx-auto px-4 py-8">
+      <div className="relative max-w-7xl mx-auto px-4 py-8 min-h-screen">
 
         {error && !isLoading && (
           <div className="mb-6 max-w-2xl mx-auto">
