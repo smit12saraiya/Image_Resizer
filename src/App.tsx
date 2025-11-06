@@ -6,7 +6,6 @@ import { GroceryReceiptCard } from './components/GroceryReceiptCard';
 import { GenericExpenseCard } from './components/GenericExpenseCard';
 import { AuthModal } from './components/AuthModal';
 import { Header } from './components/Header';
-import { ExpenseCarousel } from './components/ExpenseCarousel';
 import { uploadExpenseDocument, saveExpenseToDatabase, getAllExpenses } from './services/expenseService';
 import { Expense } from './lib/supabase';
 import { Receipt, AlertCircle, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -90,7 +89,6 @@ function App() {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentExpenses = expenses.slice(startIndex, endIndex);
-  const recentExpenses = expenses.slice(0, 5);
 
   if (authLoading) {
     return (
@@ -222,11 +220,29 @@ function App() {
           </div>
         ) : (
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-white mb-6 text-center">
-              Recent Expenses
-            </h3>
-            <div className="max-w-3xl mx-auto">
-              <ExpenseCarousel expenses={recentExpenses} onExpenseDeleted={handleExpenseDeleted} showDelete={false} />
+            <div className="max-w-5xl mx-auto">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src="https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                  alt="Person using smartphone for expense tracking"
+                  className="w-full h-[500px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#3d3848]/90 via-[#3d3848]/40 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                  <h3 className="text-3xl font-bold mb-3">
+                    Track Expenses On The Go
+                  </h3>
+                  <p className="text-lg text-gray-200 mb-4">
+                    Snap a photo of your receipt and let AI do the rest. ReceiptIQ makes expense tracking effortless.
+                  </p>
+                  <button
+                    onClick={() => setIsAuthModalOpen(true)}
+                    className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors shadow-lg"
+                  >
+                    Get Started Now
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
