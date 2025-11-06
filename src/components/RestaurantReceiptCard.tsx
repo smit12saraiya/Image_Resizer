@@ -7,14 +7,18 @@ interface RestaurantReceiptCardProps {
 
 export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
   const rawData = expense.raw_data;
+  console.log('rawData', rawData)
   const totalAmount = expense.total_amount || rawData?.total_amount ||
     (expense.subtotal || 0) + (expense.tax_amount || 0);
 
   const restaurantName = expense.vendor_name || rawData?.restaurant_name;
   const receiptTime = rawData?.receipt_time || rawData?.time;
+  const receipt_date = expense.receipt_date || '';
   const orderNumber = rawData?.order_number;
   const serverName = rawData?.server_name;
   const tipAmount = rawData?.tip_amount;
+  console.log('expense', JSON.parse(expense))
+  console.log('restaurantName', expense.restaurantName)
 
   const formatItems = (itemsString: string) => {
     if (!itemsString) return itemsString;
