@@ -63,7 +63,6 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
       order_number: order_number,
       confidence_score: confidence_score,
       invoice_date: date,
-      due_date: due_date,
       subtotal: expense.subtotal,
       tax_amount: taxAmount,
       total_amount: totalAmount,
