@@ -221,25 +221,17 @@ function App() {
         ) : (
           <div className="mb-12">
             <div className="max-w-5xl mx-auto">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" onClick={() => setIsAuthModalOpen(true)}>
                 <img
-                  src="https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                  alt="Person using smartphone for expense tracking"
-                  className="w-full h-[500px] object-cover"
+                  src="/ChatGPT Image Nov 6, 2025, 03_30_07 PM.png"
+                  alt="ReceiptIQ - Track Expenses On The Go"
+                  className="w-full h-auto object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#3d3848]/90 via-[#3d3848]/40 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <h3 className="text-3xl font-bold mb-3">
-                    Track Expenses On The Go
-                  </h3>
-                  <p className="text-lg text-gray-200 mb-4">
-                    Snap a photo of your receipt and let AI do the rest. ReceiptIQ makes expense tracking effortless.
-                  </p>
+                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
                   <button
-                    onClick={() => setIsAuthModalOpen(true)}
-                    className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors shadow-lg"
+                    className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold rounded-lg transition-all shadow-2xl group-hover:scale-105"
                   >
-                    Get Started Now
+                    Get Started with Smart Tracking
                   </button>
                 </div>
               </div>
