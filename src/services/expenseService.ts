@@ -39,10 +39,6 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
     (expense.subtotal || 0) + (expense.tax_amount || expense.tax || 0);
 
   const vendorName = expense.vendor_name || expense.store_name || expense.restaurant_name;
-  console.log('VendorName' , vendorName)
-  console.log('VendorName1' , expense.vendor_name)
-  console.log('VendorName2' , expense.store_name)
-  console.log('VendorName3' , expense.restaurant_name)
   const date = expense.date || expense.receipt_date || expense.invoice_date;
   const taxAmount = expense.tax_amount || expense.tax;
   const currency = expense.currency || expense.Currency || '$';
