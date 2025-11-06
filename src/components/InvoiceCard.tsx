@@ -9,10 +9,10 @@ export function InvoiceCard({ expense }: InvoiceCardProps) {
   const totalAmount = expense.total_amount ||
     (expense.subtotal || 0) + (expense.tax_amount || 0);
   
-
-  return (
-    console.log('Expense' + expense.items)
+console.log('Expense' + expense.items)
   console.log('smit')
+  return (
+    
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
       <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
         <div className="flex items-center justify-between">
