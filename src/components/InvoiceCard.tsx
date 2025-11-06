@@ -9,8 +9,6 @@ export function InvoiceCard({ expense }: InvoiceCardProps) {
   const totalAmount = expense.total_amount ||
     (expense.subtotal || 0) + (expense.tax_amount || 0);
   
-console.log('Expense' + expense.items)
-  console.log('smit')
   return (
     
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
@@ -76,15 +74,16 @@ console.log('Expense' + expense.items)
                   {(() => {
                     try {
                       const items = JSON.parse(expense.items);
+                      console.log('parsed',items)
                       return items.map((item: any, index: number) => (
                         <tr key={index} className="border-b border-gray-100">
                           <td className="py-2 px-3 text-gray-900">{item.description}</td>
                           <td className="text-right py-2 px-3 text-gray-700">{item.quantity}</td>
                           <td className="text-right py-2 px-3 text-gray-700">
-                            {expense.currency}{item.unit_price.toFixed(2)}
+                            {expense.rate}{item.amount.toFixed(2)}
                           </td>
                           <td className="text-right py-2 px-3 text-gray-900 font-medium">
-                            {expense.currency}{item.total.toFixed(2)}
+                            {expense.rate}{item.amount.toFixed(2)}
                           </td>
                         </tr>
                       ));
