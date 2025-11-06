@@ -74,7 +74,6 @@ export function InvoiceCard({ expense }: InvoiceCardProps) {
                   {(() => {
                     try {
                       const items = JSON.parse(expense.items);
-                      console.log('parsed',items)
                       return items.map((item: any, index: number) => (
                         <tr key={index} className="border-b border-gray-100">
                           <td className="py-2 px-3 text-gray-900">{item.description}</td>
