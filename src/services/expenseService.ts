@@ -57,7 +57,7 @@ export async function saveExpenseToDatabase(expenseData: any, userId: string) {
       image_url: expense.image_url,
       items: expense.items,
       invoice_date: date,
-      due_date: due_date,
+      due_date: expense.due_date,
       subtotal: expense.subtotal,
       tax_amount: taxAmount,
       total_amount: totalAmount,
