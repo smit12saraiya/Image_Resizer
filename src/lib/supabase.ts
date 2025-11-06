@@ -37,6 +37,7 @@ export interface Expense {
   notes?: string;
   image_quality?: string;
   invoice_number?: string;
+  invoice_date?: string;
   due_date?: string;
   payment_terms?: string;
   loyalty_number?: string;
