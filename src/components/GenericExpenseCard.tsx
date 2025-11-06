@@ -1,11 +1,33 @@
-import { Receipt, Calendar, Tag } from 'lucide-react';
+import { Receipt, Calendar, Tag, Trash2 } from 'lucide-react';
 import { Expense } from '../lib/supabase';
+import { useState } from 'react';
+import { DeleteConfirmModal } from './DeleteConfirmModal';
+import { deleteExpense } from '../services/expenseService';
 
 interface GenericExpenseCardProps {
   expense: Expense;
+  onDelete?: () => void;
 }
 
-export function GenericExpenseCard({ expense }: GenericExpenseCardProps) {
+export function GenericExpenseCard({ expense, onDelete }: GenericExpenseCardProps) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await deleteExpense(expense.id);
+      setShowDeleteModal(false);
+      if (onDelete) {
+        onDelete();
+      }
+    } catch (error) {
+      console.error('Failed to delete receipt:', error);
+      alert('Failed to delete receipt. Please try again.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
   const totalAmount = expense.total_amount ||
     (expense.subtotal || 0) + (expense.tax_amount || 0);
 
@@ -17,9 +39,18 @@ export function GenericExpenseCard({ expense }: GenericExpenseCardProps) {
             <Receipt className="w-6 h-6 text-white" />
             <h3 className="text-xl font-semibold text-white">{expense.category}</h3>
           </div>
-          <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white">
-            {expense.status}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white">
+              {expense.status}
+            </span>
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              title="Delete receipt"
+            >
+              <Trash2 className="w-5 h-5 text-white" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -99,6 +130,13 @@ export function GenericExpenseCard({ expense }: GenericExpenseCardProps) {
           <span>{new Date(expense.created_at).toLocaleDateString()}</span>
         </div>
       </div>
+
+      <DeleteConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDelete}
+        isDeleting={isDeleting}
+      />
     </div>
   );
 }

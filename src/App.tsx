@@ -68,17 +68,21 @@ function App() {
     }
   };
 
+  const handleExpenseDeleted = () => {
+    loadExpenses();
+  };
+
   const renderExpenseCard = (expense: Expense) => {
     switch (expense.category) {
       case 'INVOICE':
-        return <InvoiceCard key={expense.id} expense={expense} />;
+        return <InvoiceCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} />;
       case 'RESTAURANT':
       case 'RESTAURANT_RECEIPT':
-        return <RestaurantReceiptCard key={expense.id} expense={expense} />;
+        return <RestaurantReceiptCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} />;
       case 'GROCERY':
-        return <GroceryReceiptCard key={expense.id} expense={expense} />;
+        return <GroceryReceiptCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} />;
       default:
-        return <GenericExpenseCard key={expense.id} expense={expense} />;
+        return <GenericExpenseCard key={expense.id} expense={expense} onDelete={handleExpenseDeleted} />;
     }
   };
 
@@ -210,7 +214,7 @@ function App() {
               Recent Expenses
             </h3>
             <div className="max-w-3xl mx-auto">
-              <ExpenseCarousel expenses={recentExpenses} />
+              <ExpenseCarousel expenses={recentExpenses} onExpenseDeleted={handleExpenseDeleted} />
             </div>
           </div>
         )}

@@ -8,9 +8,10 @@ import { GenericExpenseCard } from './GenericExpenseCard';
 
 interface ExpenseCarouselProps {
   expenses: Expense[];
+  onExpenseDeleted?: () => void;
 }
 
-export function ExpenseCarousel({ expenses }: ExpenseCarouselProps) {
+export function ExpenseCarousel({ expenses, onExpenseDeleted }: ExpenseCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -28,14 +29,14 @@ export function ExpenseCarousel({ expenses }: ExpenseCarouselProps) {
   const renderExpenseCard = (expense: Expense) => {
     switch (expense.category) {
       case 'INVOICE':
-        return <InvoiceCard expense={expense} />;
+        return <InvoiceCard expense={expense} onDelete={onExpenseDeleted} />;
       case 'RESTAURANT':
       case 'RESTAURANT_RECEIPT':
-        return <RestaurantReceiptCard expense={expense} />;
+        return <RestaurantReceiptCard expense={expense} onDelete={onExpenseDeleted} />;
       case 'GROCERY':
-        return <GroceryReceiptCard expense={expense} />;
+        return <GroceryReceiptCard expense={expense} onDelete={onExpenseDeleted} />;
       default:
-        return <GenericExpenseCard expense={expense} />;
+        return <GenericExpenseCard expense={expense} onDelete={onExpenseDeleted} />;
     }
   };
 

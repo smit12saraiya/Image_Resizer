@@ -1,11 +1,33 @@
-import { Calendar, ShoppingCart, Tag, Package } from 'lucide-react';
+import { Calendar, ShoppingCart, Tag, Package, Trash2 } from 'lucide-react';
 import { Expense } from '../lib/supabase';
+import { useState } from 'react';
+import { DeleteConfirmModal } from './DeleteConfirmModal';
+import { deleteExpense } from '../services/expenseService';
 
 interface GroceryReceiptCardProps {
   expense: Expense;
+  onDelete?: () => void;
 }
 
-export function GroceryReceiptCard({ expense }: GroceryReceiptCardProps) {
+export function GroceryReceiptCard({ expense, onDelete }: GroceryReceiptCardProps) {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await deleteExpense(expense.id);
+      setShowDeleteModal(false);
+      if (onDelete) {
+        onDelete();
+      }
+    } catch (error) {
+      console.error('Failed to delete receipt:', error);
+      alert('Failed to delete receipt. Please try again.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
   const rawData = expense.raw_data;
   let items = [];
   try {
@@ -23,9 +45,18 @@ export function GroceryReceiptCard({ expense }: GroceryReceiptCardProps) {
             <ShoppingCart className="w-6 h-6 text-white" />
             <h3 className="text-xl font-semibold text-white">Grocery Receipt</h3>
           </div>
-          <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white">
-            {expense.status}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white">
+              {expense.status}
+            </span>
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              title="Delete receipt"
+            >
+              <Trash2 className="w-5 h-5 text-white" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -126,6 +157,13 @@ export function GroceryReceiptCard({ expense }: GroceryReceiptCardProps) {
           <span>{new Date(expense.created_at).toLocaleDateString()}</span>
         </div>
       </div>
+
+      <DeleteConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDelete}
+        isDeleting={isDeleting}
+      />
     </div>
   );
 }

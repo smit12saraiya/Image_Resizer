@@ -100,3 +100,22 @@ export async function getAllExpenses() {
 
   return data || [];
 }
+
+export async function deleteExpense(expenseId: string) {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error('User not authenticated');
+  }
+
+  const { error } = await supabase
+    .from('receipts')
+    .delete()
+    .eq('id', expenseId)
+    .eq('user_id', user.id);
+
+  if (error) {
+    console.error('Database error:', error);
+    throw new Error('Failed to delete receipt');
+  }
+}
