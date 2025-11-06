@@ -11,11 +11,11 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
     (expense.subtotal || 0) + (expense.tax_amount || 0);
 
   const restaurantName = expense.vendor_name || rawData?.restaurant_name;
-  const receiptTime = rawData?.receipt_time || rawData?.time;
+  const receiptTime = expense.receipt_time || rawData?.time;
   const receipt_date = expense.receipt_date || '';
-  const orderNumber = rawData?.order_number;
-  const serverName = rawData?.server_name;
-  const tipAmount = rawData?.tip_amount;
+  const orderNumber = expense.order_number || '';
+  const serverName = expense.server_name || '';
+  const tipAmount = expense.tip_amount || '';
 
   const formatItems = (itemsString: string) => {
     if (!itemsString) return itemsString;
@@ -121,27 +121,27 @@ export function RestaurantReceiptCard({ expense }: RestaurantReceiptCardProps) {
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Subtotal:</span>
             <span className="font-medium text-gray-900">
-              {expense.currency}{(expense.subtotal || rawData?.subtotal || 0).toFixed(2)}
+              {expense.currency} {(expense.subtotal || rawData?.subtotal || 0).toFixed(2)}
             </span>
           </div>
           {tipAmount && tipAmount > 0 && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Tip:</span>
               <span className="font-medium text-gray-900">
-                {expense.currency}{tipAmount.toFixed(2)}
+                {expense.currency} {tipAmount.toFixed(2)}
               </span>
             </div>
           )}
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Tax:</span>
             <span className="font-medium text-gray-900">
-              {expense.currency}{(expense.tax_amount || rawData?.tax_amount || 0).toFixed(2)}
+              {expense.currency} {(expense.tax_amount || rawData?.tax_amount || 0).toFixed(2)}
             </span>
           </div>
           <div className="flex justify-between text-lg font-semibold pt-2 border-t border-gray-200">
             <span className="text-gray-900">Total:</span>
             <span className="text-amber-600">
-              {expense.currency}{totalAmount.toFixed(2)}
+              {expense.currency} {totalAmount.toFixed(2)}
             </span>
           </div>
         </div>
