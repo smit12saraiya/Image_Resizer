@@ -22,7 +22,7 @@ export function Header({ onSignInClick }: HeaderProps) {
   };
 
   return (
-    <header className="bg-[#4a4458]/90 backdrop-blur-sm border-b border-gray-700/50 sticky top-0 z-50">
+    <header className="bg-[#2d2a33]/90 backdrop-blur-sm border-b border-gray-700/50 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -41,7 +41,7 @@ export function Header({ onSignInClick }: HeaderProps) {
                 </div>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#5a5167] border border-gray-600 rounded-lg hover:bg-[#4a4458] transition-colors text-gray-200"
+                  className="flex items-center gap-2 px-4 py-2 bg-[#3a3640] border border-gray-600 rounded-lg hover:bg-[#2d2a33] transition-colors text-gray-200"
                 >
                   <LogOut className="w-5 h-5" />
                   <span className="font-medium">Sign Out</span>
