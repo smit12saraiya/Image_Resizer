@@ -46,8 +46,7 @@ export function RestaurantReceiptCard({ expense, onDelete, showDelete = false }:
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
-      con>
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
       <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -80,7 +79,7 @@ export function RestaurantReceiptCard({ expense, onDelete, showDelete = false }:
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Calendar className="w-4 h-4" />
-                <span>{expense.date || rawData?.receipt_date}</span>
+                <span>{expense.receipt_date || rawData?.receipt_date}</span>
                 {receiptTime && (
                   <>
                     <Clock className="w-4 h-4 ml-2" />
@@ -131,13 +130,18 @@ export function RestaurantReceiptCard({ expense, onDelete, showDelete = false }:
                 <tbody>
                   {(() => {
                     try {
-                      const items = JSON.parse(expense.items);
+                      let items: any[] = [];
+                      if (typeof expense.items === 'string') {
+                        items = JSON.parse(expense.items || '[]');
+                      } else if (Array.isArray(expense.items)) {
+                        items = expense.items;
+                      }
                       return items.map((item: any, index: number) => (
                         <tr key={index} className="border-b border-gray-100">
                           <td className="py-2 px-3 text-gray-900">{item.name}</td>
-                          <td className="text-right py-2 px-3 text-gray-700">{item.quantity}</td>
+                          <td className="text-right py-2 px-3 text-gray-700">{item.quantity ?? 1}</td>
                           <td className="text-right py-2 px-3 text-gray-900 font-medium">
-                            {expense.currency}{item.price.toFixed(2)}
+                            {expense.currency}{(Number(item.price) || 0).toFixed(2)}
                           </td>
                         </tr>
                       ));
@@ -185,13 +189,6 @@ export function RestaurantReceiptCard({ expense, onDelete, showDelete = false }:
             <span className="text-xs px-2 py-1 bg-amber-100 text-amber-700 rounded-full font-medium">
               {rawData.confidence_score} Confidence
             </span>
-          </div>
-        )}
-
-        {expense.tags && (
-          <div className="mt-4 flex items-center gap-2">
-            <Tag className="w-4 h-4 text-gray-400" />
-            <span className="text-xs text-gray-600">{expense.tags}</span>
           </div>
         )}
 

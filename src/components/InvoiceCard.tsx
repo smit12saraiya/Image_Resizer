@@ -107,16 +107,17 @@ export function InvoiceCard({ expense, onDelete, showDelete = false }: InvoiceCa
                 <tbody>
                   {(() => {
                     try {
-                      const items = JSON.parse(expense.items);
+                      const items = typeof expense.items === 'string' ? JSON.parse(expense.items) : (expense.items || []);
+                      if (!Array.isArray(items)) return null;
                       return items.map((item: any, index: number) => (
                         <tr key={index} className="border-b border-gray-100">
                           <td className="py-2 px-3 text-gray-900">{item.description}</td>
                           <td className="text-right py-2 px-3 text-gray-700">{item.quantity}</td>
                           <td className="text-right py-2 px-3 text-gray-700">
-                            {expense.rate}{item.amount.toFixed(2)}
+                            {item.rate} {item.amount.toFixed(2)}
                           </td>
                           <td className="text-right py-2 px-3 text-gray-900 font-medium">
-                            {expense.rate}{item.amount.toFixed(2)}
+                            {item.rate} {item.amount.toFixed(2)}
                           </td>
                         </tr>
                       ));
@@ -154,13 +155,6 @@ export function InvoiceCard({ expense, onDelete, showDelete = false }: InvoiceCa
         {expense.payment_terms && (
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <p className="text-xs text-blue-800">{expense.payment_terms}</p>
-          </div>
-        )}
-
-        {expense.tags && (
-          <div className="mt-4 flex items-center gap-2">
-            <Tag className="w-4 h-4 text-gray-400" />
-            <span className="text-xs text-gray-600">{expense.tags}</span>
           </div>
         )}
 

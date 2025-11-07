@@ -10,7 +10,6 @@ import { uploadExpenseDocument, saveExpenseToDatabase, getAllExpenses } from './
 import { Expense } from './lib/supabase';
 import { Receipt, AlertCircle, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAuth } from './contexts/AuthContext';
-import { sampleExpenses } from './data/sampleExpenses';
 
 function App() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -26,7 +25,6 @@ function App() {
     if (user) {
       loadExpenses();
     } else {
-      setExpenses(sampleExpenses as Expense[]);
       setIsInitialLoading(false);
     }
   }, [user]);
@@ -141,16 +139,6 @@ function App() {
             </div>
             <p className="text-gray-300 mt-4 text-lg font-medium">Loading expenses...</p>
           </div>
-        ) : expenses.length === 0 ? (
-          <div className="text-center py-16 bg-slate-800/50 backdrop-blur-sm rounded-xl border-2 border-dashed border-gray-600">
-            <Receipt className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-200 mb-2">
-              {user ? 'No expenses yet' : 'No expenses to display'}
-            </h3>
-            <p className="text-gray-400">
-              {user ? 'Upload your first document to get started' : 'Sign in and upload your first document to get started'}
-            </p>
-          </div>
         ) : user ? (
           <div className="mb-20">
             <h3 className="text-2xl font-bold text-white mb-6">
@@ -207,9 +195,6 @@ function App() {
                   <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#FFFFFF] leading-tight">
                     Smart Receipt Parsing, Zero Manual Entry
                   </h1>
-                  <p className="text-lg sm:text-xl md:text-2xl text-[#FFFFFF] leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                    Snap a photo of your receipt and let AI do the rest. ReceiptIQ makes expense tracking effortless.
-                  </p>
                   <div className="pt-4 space-y-3">
                     <button
                       onClick={() => setIsAuthModalOpen(true)}
@@ -229,7 +214,8 @@ function App() {
                     {/* Gradient Overlay for better text readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10 pointer-events-none"></div>
                     <img
-                      src="/LandingPage.png"
+
+                      src="public/LandingPage.png"
                       alt="ReceiptIQ - Track Expenses On The Go"
                       className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
                     />

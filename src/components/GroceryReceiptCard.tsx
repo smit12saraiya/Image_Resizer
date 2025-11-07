@@ -30,13 +30,13 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
     }
   };
   const rawData = expense.raw_data;
-  let items = [];
-  try {
+  let items: any[] = [];
+  if (Array.isArray(expense.items)) {
     items = expense.items;
-    console.log('itemsss' ,items)
-  } catch {
+    console.log('itemsss', items);
+  } else {
     items = rawData?.items || [];
-    console.log('itemsss catch' ,items)
+    console.log('itemsss fallback', items);
   }
   const totalItemsCount = rawData?.total_items_count || items.length;
   
@@ -74,7 +74,7 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
             </h4>
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <Calendar className="w-4 h-4" />
-              <span>{expense.date}</span>
+              <span>{expense.receipt_date}</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
               <Package className="w-4 h-4" />
@@ -108,13 +108,17 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
                 <tbody>
                   {(() => {
                     try {
-                      const items = JSON.parse(expense.items);
-                      return items.map((item: any, index: number) => (
+                      const parsedItems = typeof expense.items === 'string'
+                        ? JSON.parse(expense.items)
+                        : Array.isArray(expense.items)
+                          ? expense.items
+                          : [];
+                      return parsedItems.map((item: any, index: number) => (
                         <tr key={index} className="border-b border-gray-100">
                           <td className="py-2 px-3 text-gray-900">{item.name}</td>
                           <td className="text-right py-2 px-3 text-gray-700">{item.quantity || 1}</td>
                           <td className="text-right py-2 px-3 text-gray-700">
-                             {item.price.toFixed(2)}
+                             {(item.price || 0).toFixed(2)}
                           </td>
                         
                         </tr>
@@ -157,13 +161,6 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
             <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full font-medium">
               {rawData.confidence} Confidence
             </span>
-          </div>
-        )}
-
-        {expense.tags && (
-          <div className="mt-4 flex items-center gap-2">
-            <Tag className="w-4 h-4 text-gray-400" />
-            <span className="text-xs text-gray-600">{expense.tags}</span>
           </div>
         )}
 
