@@ -106,15 +106,23 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
                   </tr>
                 </thead>
                 <tbody>
-                  {expense.items.map((item: any, index: number) => (
-                    <tr key={index} className="border-b border-gray-100">
-                      <td className="py-2 px-3 text-gray-900">{item.name}</td>
-                      <td className="text-right py-2 px-3 text-gray-700">{item.quantity || 1}</td>
-                      <td className="text-right py-2 px-3 text-gray-900 font-medium">
-                      
-                      </td>
-                    </tr>
-                  ))}
+                  {(() => {
+                    try {
+                      const items = JSON.parse(expense.items);
+                      return items.map((item: any, index: number) => (
+                        <tr key={index} className="border-b border-gray-100">
+                          <td className="py-2 px-3 text-gray-900">{item.name}</td>
+                          <td className="text-right py-2 px-3 text-gray-700">{item.quantity || 1}</td>
+                          <td className="text-right py-2 px-3 text-gray-700">
+                             {item.price.toFixed(2)}
+                          </td>
+                        
+                        </tr>
+                      ));
+                    } catch {
+                      return null;
+                    }
+                  })()}
                 </tbody>
               </table>
             </div>
