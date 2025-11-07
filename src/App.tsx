@@ -207,6 +207,9 @@ function App() {
                   <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#FFFFFF] leading-tight">
                     Smart Receipt Parsing, Zero Manual Entry
                   </h1>
+                  <p className="text-lg sm:text-xl md:text-2xl text-[#FFFFFF] leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                    Snap a photo of your receipt and let AI do the rest. ReceiptIQ makes expense tracking effortless.
+                  </p>
                   <div className="pt-4 space-y-3">
                     <button
                       onClick={() => setIsAuthModalOpen(true)}
