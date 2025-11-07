@@ -76,10 +76,6 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
               <Calendar className="w-4 h-4" />
               <span>{expense.receipt_date}</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
-              <Package className="w-4 h-4" />
-              <span>{totalItemsCount} items</span>
-            </div>
           </div>
           {expense.image_url && (
             <a
