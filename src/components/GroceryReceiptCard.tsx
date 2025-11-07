@@ -93,7 +93,7 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
           )}
         </div>
 
-        {items && items.length > 0 && (
+        {expense.items && expense.items.length > 0 && (
           <div className="mb-6">
             <h5 className="text-sm font-semibold text-gray-700 mb-3">Items Purchased:</h5>
             <div className="overflow-x-auto max-h-80 overflow-y-auto">
@@ -106,7 +106,7 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
                   </tr>
                 </thead>
                 <tbody>
-                  {items.map((item: any, index: number) => (
+                  {expense.items.map((item: any, index: number) => (
                     <tr key={index} className="border-b border-gray-100">
                       <td className="py-2 px-3 text-gray-900">{item.name}</td>
                       <td className="text-right py-2 px-3 text-gray-700">{item.quantity || 1}</td>
