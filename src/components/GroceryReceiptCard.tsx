@@ -36,8 +36,6 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
   } catch {
     items = rawData?.items || [];
   }
-  console.log('Expense', expense)
-  console.log('Items', expense.items)
   const totalItemsCount = rawData?.total_items_count || items.length;
 
   return (
@@ -110,7 +108,7 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
                       <td className="py-2 px-3 text-gray-900">{item.name}</td>
                       <td className="text-right py-2 px-3 text-gray-700">{item.quantity || 1}</td>
                       <td className="text-right py-2 px-3 text-gray-900 font-medium">
-                        {expense.currency}{(typeof item.subtotal === 'number' ? item.subtotal : item.price)?.toFixed(2)}
+                        {expense.currency || '$'} {(typeof item.subtotal === 'number' ? item.subtotal : item.price)?.toFixed(2)}
                       </td>
                     </tr>
                   ))}
