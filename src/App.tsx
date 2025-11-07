@@ -102,12 +102,12 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#2d2a33] via-[#3a3640] to-[#25232a] relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#2d2a33] via-[#3a3640] to-[#25232a] relative overflow-hidden scroll-smooth">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(234,158,110,0.08),transparent_40%),radial-gradient(circle_at_80%_90%,rgba(234,158,110,0.06),transparent_40%)] pointer-events-none"></div>
 
       <Header onSignInClick={() => setIsAuthModalOpen(true)} />
 
-      <div className="relative max-w-7xl mx-auto px-4 py-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {error && !isLoading && (
           <div className="mb-6 max-w-2xl mx-auto">
@@ -119,7 +119,7 @@ function App() {
         )}
 
         {user && (
-          <div className="mb-12 max-w-2xl mx-auto">
+          <div className="mb-20 max-w-2xl mx-auto">
             <FileUpload onUpload={handleFileUpload} isLoading={isLoading} />
 
             {isLoading && (
@@ -152,7 +152,7 @@ function App() {
             </p>
           </div>
         ) : user ? (
-          <div className="mb-12">
+          <div className="mb-20">
             <h3 className="text-2xl font-bold text-white mb-6">
               Your Expenses
             </h3>
@@ -199,20 +199,41 @@ function App() {
             )}
           </div>
         ) : (
-          <div className="mb-12">
-            <div className="max-w-md mx-auto">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" onClick={() => setIsAuthModalOpen(true)}>
-                <img
-                  src="/ChatGPT Image Nov 6, 2025, 03_30_07 PM.png"
-                  alt="ReceiptIQ - Track Expenses On The Go"
-                  className="w-full h-auto object-cover"
-                />
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-                  <button
-                    className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold rounded-lg transition-all shadow-2xl group-hover:scale-105"
-                  >
-                    Get Started with Smart Tracking
-                  </button>
+          <div className="py-12 sm:py-16 lg:py-20 px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                {/* Hero Text Content */}
+                <div className="text-center lg:text-left space-y-6 animate-fade-in">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#FFFFFF] leading-tight">
+                    Smart Receipt Parsing, Zero Manual Entry
+                  </h1>
+                  <p className="text-lg sm:text-xl md:text-2xl text-[#FFFFFF] leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                    Snap a photo of your receipt and let AI do the rest. ReceiptIQ makes expense tracking effortless.
+                  </p>
+                  <div className="pt-4 space-y-3">
+                    <button
+                      onClick={() => setIsAuthModalOpen(true)}
+                      className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-[#FFFFFF] text-lg font-bold rounded-lg transition-all shadow-2xl hover:scale-105 hover:shadow-orange-500/50 w-full sm:w-auto inline-block"
+                    >
+                      Start Free Trial
+                    </button>
+                    <p className="text-[#FFFFFF] text-sm font-medium">
+                      No credit card required
+                    </p>
+                  </div>
+                </div>
+
+                {/* Hero Image */}
+                <div className="relative animate-fade-in-delay">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" onClick={() => setIsAuthModalOpen(true)}>
+                    {/* Gradient Overlay for better text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10 pointer-events-none"></div>
+                    <img
+                      src="/ChatGPT Image Nov 6, 2025, 03_30_07 PM.png"
+                      alt="ReceiptIQ - Track Expenses On The Go"
+                      className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
