@@ -36,6 +36,8 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
   } catch {
     items = rawData?.items || [];
   }
+  console.log('Expense', JSON.parse(expense))
+  console.log('Items', JSON.parse(expense.items))
   const totalItemsCount = rawData?.total_items_count || items.length;
 
   return (
