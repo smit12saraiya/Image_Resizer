@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase';
 
-const N8N_WEBHOOK_URL = 'https://smit12saraiya.app.n8n.cloud/webhook-test/3f1bc798-8510-4dbb-8240-2666baa570e5';
+const N8N_WEBHOOK_URL = 'https://smit12saraiya.app.n8n.cloud/webhook/3f1bc798-8510-4dbb-8240-2666baa570e5';
 
 export async function uploadExpenseDocument(file: File) {
   const formData = new FormData();
