@@ -33,10 +33,13 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
   let items = [];
   try {
     items = expense.items ? JSON.parse(expense.items) : (rawData?.items || []);
+    console.log('itemsss' ,items)
   } catch {
     items = rawData?.items || [];
+    console.log('itemsss catch' ,items)
   }
   const totalItemsCount = rawData?.total_items_count || items.length;
+  
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
@@ -108,7 +111,7 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
                       <td className="py-2 px-3 text-gray-900">{item.name}</td>
                       <td className="text-right py-2 px-3 text-gray-700">{item.quantity || 1}</td>
                       <td className="text-right py-2 px-3 text-gray-900 font-medium">
-                        {expense.currency || '$'} {(typeof item.subtotal === 'number' ? item.subtotal : item.price)?.toFixed(2)}
+                      
                       </td>
                     </tr>
                   ))}
