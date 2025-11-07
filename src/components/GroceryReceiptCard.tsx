@@ -93,7 +93,7 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
           )}
         </div>
 
-        {expense.items && expense.items.length > 0 && (
+        {expense.items && (
           <div className="mb-6">
             <h5 className="text-sm font-semibold text-gray-700 mb-3">Items Purchased:</h5>
             <div className="overflow-x-auto max-h-80 overflow-y-auto">
