@@ -229,7 +229,7 @@ function App() {
                     {/* Gradient Overlay for better text readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10 pointer-events-none"></div>
                     <img
-                      src="/public/ChatGPT Image Nov 6, 2025, 03_30_07 PM.png"
+                      src="/ChatGPT%20Image%20Nov%206,%202025,%2003_30_07%20PM.png"
                       alt="ReceiptIQ - Track Expenses On The Go"
                       className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
                     />
