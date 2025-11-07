@@ -215,7 +215,7 @@ function App() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10 pointer-events-none"></div>
                     <img
 
-                      src="public/LandingPage.png"
+                      src="/LandingPage.png"
                       alt="ReceiptIQ - Track Expenses On The Go"
                       className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
                     />
