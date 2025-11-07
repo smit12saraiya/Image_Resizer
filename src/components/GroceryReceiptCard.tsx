@@ -32,7 +32,7 @@ export function GroceryReceiptCard({ expense, onDelete, showDelete = false }: Gr
   const rawData = expense.raw_data;
   let items = [];
   try {
-    items = expense.items ? JSON.parse(expense.items) : (rawData?.items || []);
+    items = expense.items;
     console.log('itemsss' ,items)
   } catch {
     items = rawData?.items || [];
