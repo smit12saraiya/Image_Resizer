@@ -119,3 +119,66 @@ export async function deleteExpense(expenseId: string) {
     throw new Error('Failed to delete receipt');
   }
 }
+
+export async function getUserProfile(userId: string) {
+  const { data, error } = await supabase
+    .from('user_profiles')
+    .select('*')
+    .eq('user_id', userId)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Database error:', error);
+    throw new Error('Failed to fetch user profile');
+  }
+
+  // If profile doesn't exist, create it
+  if (!data) {
+    const { data: newProfile, error: insertError } = await supabase
+      .from('user_profiles')
+      .insert({
+        user_id: userId,
+        upload_count: 0,
+        has_paid: false
+      })
+      .select()
+      .single();
+
+    if (insertError) {
+      console.error('Database error:', insertError);
+      throw new Error('Failed to create user profile');
+    }
+
+    return newProfile;
+  }
+
+  return data;
+}
+
+export async function checkUploadLimit(userId: string): Promise<{ canUpload: boolean; uploadCount: number; hasReachedLimit: boolean }> {
+  const profile = await getUserProfile(userId);
+  const FREE_UPLOAD_LIMIT = 4;
+
+  const canUpload = profile.has_paid || profile.upload_count < FREE_UPLOAD_LIMIT;
+  const hasReachedLimit = !profile.has_paid && profile.upload_count >= FREE_UPLOAD_LIMIT;
+
+  return {
+    canUpload,
+    uploadCount: profile.upload_count,
+    hasReachedLimit
+  };
+}
+
+export async function incrementUploadCount(userId: string) {
+  const profile = await getUserProfile(userId);
+
+  const { error } = await supabase
+    .from('user_profiles')
+    .update({ upload_count: profile.upload_count + 1 })
+    .eq('user_id', userId);
+
+  if (error) {
+    console.error('Database error:', error);
+    throw new Error('Failed to update upload count');
+  }
+}

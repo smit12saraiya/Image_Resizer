@@ -5,8 +5,9 @@ import { RestaurantReceiptCard } from './components/RestaurantReceiptCard';
 import { GroceryReceiptCard } from './components/GroceryReceiptCard';
 import { GenericExpenseCard } from './components/GenericExpenseCard';
 import { AuthModal } from './components/AuthModal';
+import { PaymentRequiredModal } from './components/PaymentRequiredModal';
 import { Header } from './components/Header';
-import { uploadExpenseDocument, saveExpenseToDatabase, getAllExpenses } from './services/expenseService';
+import { uploadExpenseDocument, saveExpenseToDatabase, getAllExpenses, checkUploadLimit, incrementUploadCount } from './services/expenseService';
 import { Expense } from './lib/supabase';
 import { Receipt, AlertCircle, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAuth } from './contexts/AuthContext';
@@ -17,8 +18,10 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [uploadCount, setUploadCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const { user, signOut, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
@@ -54,8 +57,23 @@ function App() {
     setError(null);
 
     try {
+      // Check upload limit before processing
+      const { uploadCount: currentCount, hasReachedLimit } = await checkUploadLimit(user.id);
+
+      if (hasReachedLimit) {
+        setUploadCount(currentCount);
+        setIsPaymentModalOpen(true);
+        setIsLoading(false);
+        return;
+      }
+
       const result = await uploadExpenseDocument(file);
       const savedExpense = await saveExpenseToDatabase(result, user.id);
+
+      // Increment upload count after successful upload
+      await incrementUploadCount(user.id);
+      setUploadCount(currentCount + 1);
+
       setExpenses(prev => [savedExpense, ...prev]);
     } catch (err) {
       console.error('Upload error:', err);
@@ -227,6 +245,11 @@ function App() {
         )}
 
         <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+        <PaymentRequiredModal
+          isOpen={isPaymentModalOpen}
+          onClose={() => setIsPaymentModalOpen(false)}
+          uploadCount={uploadCount}
+        />
       </div>
     </div>
   );
