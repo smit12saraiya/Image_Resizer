@@ -1,4 +1,4 @@
-import { Receipt } from 'lucide-react';
+import { Images } from 'lucide-react';
 
 export function Header() {
   return (
@@ -6,8 +6,8 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Receipt className="w-8 h-8 text-orange-400" />
-            <h1 className="text-2xl font-bold text-white">Image Resizer</h1>
+            <Images className="w-8 h-8 text-orange-400" />
+            <h1 className="text-2xl font-bold text-white">NoBull Creative Cloner</h1>
           </div>
         </div>
       </div>

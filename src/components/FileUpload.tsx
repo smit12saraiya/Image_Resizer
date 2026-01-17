@@ -124,7 +124,7 @@ export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
         <div className="bg-slate-800/50 backdrop-blur-sm border border-gray-600 rounded-xl p-6">
           <h3 className="text-lg font-semibold text-white mb-4">OUTPUT</h3>
           <div className="space-y-3">
-            {(['jpg', 'png', 'pdf', 'svg'] as OutputType[]).map((option) => (
+            {(['jpg', 'png', 'pdf'] as OutputType[]).map((option) => (
               <label
                 key={option}
                 className="flex items-center gap-3 cursor-pointer group"
