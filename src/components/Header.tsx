@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { LogOut, User } from 'lucide-react';
-=======
-import { Images, LogOut, User } from 'lucide-react';
->>>>>>> a14081cac0fb844f64dc14f5304d5c7901b59b8e
 import { useAuth } from '../contexts/AuthContext';
 
 export function Header() {
