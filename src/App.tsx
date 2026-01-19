@@ -24,7 +24,7 @@ function App() {
       formData.append('outputFormat', outputFormat);
 
       // Replace with your actual n8n webhook URL
-      const N8N_WEBHOOK_URL = 'https://n8n.srv1204322.hstgr.cloud/webhook/image-resizer';
+      const N8N_WEBHOOK_URL = 'https://n8n.srv1276188.hstgr.cloud/webhook/image-resizer';
 
       const response = await fetch(N8N_WEBHOOK_URL, {
         method: 'POST',
@@ -112,7 +112,7 @@ function App() {
           {/* Page Title */}
           <div className="text-center mb-8">
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-3">
-              Image Resizer
+              No Bull Creative Cloner
             </h1>
             <p className="text-gray-300 text-lg">
               Resize your images with custom presets and output formats
