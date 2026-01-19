@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { LogOut, User } from 'lucide-react';
+=======
+import { Images, LogOut, User } from 'lucide-react';
+>>>>>>> a14081cac0fb844f64dc14f5304d5c7901b59b8e
 import { useAuth } from '../contexts/AuthContext';
 
 export function Header() {
@@ -24,6 +28,7 @@ export function Header() {
     <header className="bg-[#2d2a33]/90 backdrop-blur-sm border-b border-gray-700/50 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
+
           <div className="flex items-center">
             <img src="/Logo.png" alt="NoBull Creative Cloner" className="h-12" />
           </div>
