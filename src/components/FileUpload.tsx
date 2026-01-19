@@ -23,6 +23,47 @@ const formatLabels: Record<OutputType, string> = {
   svg: 'SVG Vector',
 };
 
+// Preset dimensions matching n8n PRESET_DEFINED node
+interface PresetDimension {
+  name: string;
+  width: number;
+  height: number;
+  ratio?: string;
+}
+
+const presetDimensions: Record<PresetType, PresetDimension[]> = {
+  social: [
+    { name: 'fb_post', width: 1200, height: 630, ratio: '1.91:1' },
+    { name: 'ig_post', width: 1080, height: 1080, ratio: '1:1' },
+    { name: 'ig_story', width: 1080, height: 1920, ratio: '9:16' },
+    { name: 'twitter_post', width: 1200, height: 675, ratio: '16:9' },
+    { name: 'linkedin_post', width: 1200, height: 627, ratio: '1.91:1' },
+  ],
+  iab: [
+    { name: 'leaderboard', width: 728, height: 90 },
+    { name: 'medium_rectangle', width: 300, height: 250 },
+    { name: 'wide_skyscraper', width: 160, height: 600 },
+    { name: 'large_rectangle', width: 336, height: 280 },
+    { name: 'mobile_banner', width: 320, height: 50 },
+    { name: 'billboard', width: 970, height: 250 },
+  ],
+  website: [
+    { name: 'full_banner', width: 468, height: 60 },
+    { name: 'half_banner', width: 234, height: 60 },
+    { name: 'skyscraper', width: 120, height: 600 },
+    { name: 'wide_skyscraper', width: 160, height: 600 },
+    { name: 'vertical_banner', width: 120, height: 240 },
+  ],
+};
+
+// Format preset name for display (e.g., "fb_post" -> "FB Post")
+const formatPresetName = (name: string): string => {
+  return name
+    .split('_')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
   const { user, signInWithGoogle, canUpload, remainingUploads, incrementUploadCount, profile } = useAuth();
   const [dragActive, setDragActive] = useState(false);
@@ -334,17 +375,35 @@ export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
                     </div>
                   </div>
 
+                  {/* Output Files Preview */}
+                  <div className="p-4 bg-slate-700/50 rounded-xl">
+                    <p className="text-gray-400 text-sm mb-3">
+                      You will receive <span className="text-orange-400 font-semibold">{presetDimensions[preset].length} files</span> in your ZIP:
+                    </p>
+                    <div className="max-h-40 overflow-y-auto space-y-2 pr-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                      {presetDimensions[preset].map((dim) => (
+                        <div
+                          key={dim.name}
+                          className="flex items-center justify-between py-2 px-3 bg-slate-600/50 rounded-lg text-sm"
+                        >
+                          <span className="text-white font-medium">
+                            {formatPresetName(dim.name)}
+                          </span>
+                          <span className="text-gray-400">
+                            {dim.width} x {dim.height}
+                            <span className="text-gray-500 ml-1">.{outputFormat}</span>
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   {/* Remaining uploads warning */}
                   {profile && !profile.hasPaid && (
                     <div className={`p-3 rounded-lg text-sm text-center ${remainingUploads() <= 2 ? 'bg-red-500/20 text-red-300' : 'bg-slate-700/50 text-gray-400'}`}>
                       {remainingUploads()} free conversion{remainingUploads() !== 1 ? 's' : ''} remaining
                     </div>
                   )}
-
-                  {/* Info text */}
-                  <p className="text-gray-400 text-sm text-center">
-                    Your image will be resized to multiple dimensions based on the selected preset.
-                  </p>
                 </>
               )}
             </div>
