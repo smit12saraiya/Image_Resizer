@@ -101,6 +101,59 @@ export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
   return (
     <>
       <div className="space-y-6">
+        {/* Dropdown Selectors */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* PRESET Dropdown */}
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-gray-600 rounded-xl p-6">
+            <label htmlFor="preset-select" className="text-lg font-semibold text-white mb-4 block">
+              PRESET
+            </label>
+            <select
+              id="preset-select"
+              value={preset}
+              onChange={(e) => setPreset(e.target.value as PresetType)}
+              className="w-full px-4 py-3 bg-slate-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 cursor-pointer appearance-none"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 12px center',
+                backgroundSize: '20px',
+              }}
+            >
+              {(['social', 'iab', 'website'] as PresetType[]).map((option) => (
+                <option key={option} value={option} className="bg-slate-700">
+                  {presetLabels[option]}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* OUTPUT Dropdown */}
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-gray-600 rounded-xl p-6">
+            <label htmlFor="output-select" className="text-lg font-semibold text-white mb-4 block">
+              OUTPUT
+            </label>
+            <select
+              id="output-select"
+              value={outputFormat}
+              onChange={(e) => setOutputFormat(e.target.value as OutputType)}
+              className="w-full px-4 py-3 bg-slate-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 cursor-pointer appearance-none"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 12px center',
+                backgroundSize: '20px',
+              }}
+            >
+              {(['jpg', 'png', 'pdf'] as OutputType[]).map((option) => (
+                <option key={option} value={option} className="bg-slate-700">
+                  {formatLabels[option]}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
         {/* Upload Area */}
         <div
           className={`relative border-2 border-dashed rounded-xl p-12 transition-all backdrop-blur-sm ${
@@ -133,59 +186,6 @@ export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
             <p className="text-sm text-gray-400 mb-4">or click to browse</p>
             <p className="text-xs text-gray-500">Supports PNG, JPG, JPEG</p>
           </label>
-        </div>
-
-        {/* Radio Button Groups */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* PRESET Radio Group */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-gray-600 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">PRESET</h3>
-            <div className="space-y-3">
-              {(['social', 'iab', 'website'] as PresetType[]).map((option) => (
-                <label
-                  key={option}
-                  className="flex items-center gap-3 cursor-pointer group"
-                >
-                  <input
-                    type="radio"
-                    name="preset"
-                    value={option}
-                    checked={preset === option}
-                    onChange={(e) => setPreset(e.target.value as PresetType)}
-                    className="w-5 h-5 text-orange-500 bg-gray-700 border-gray-600 focus:ring-orange-500 focus:ring-2 cursor-pointer"
-                  />
-                  <span className="text-gray-200 group-hover:text-white transition-colors">
-                    {option}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* OUTPUT Radio Group */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-gray-600 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">OUTPUT</h3>
-            <div className="space-y-3">
-              {(['jpg', 'png', 'pdf'] as OutputType[]).map((option) => (
-                <label
-                  key={option}
-                  className="flex items-center gap-3 cursor-pointer group"
-                >
-                  <input
-                    type="radio"
-                    name="output"
-                    value={option}
-                    checked={outputFormat === option}
-                    onChange={(e) => setOutputFormat(e.target.value as OutputType)}
-                    className="w-5 h-5 text-orange-500 bg-gray-700 border-gray-600 focus:ring-orange-500 focus:ring-2 cursor-pointer"
-                  />
-                  <span className="text-gray-200 group-hover:text-white transition-colors uppercase">
-                    {option}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 
