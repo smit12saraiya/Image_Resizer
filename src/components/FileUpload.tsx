@@ -1,5 +1,5 @@
 import { Upload, X, FileImage, Settings, FileOutput } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 interface FileUploadProps {
   onUpload: (file: File, preset: PresetType, outputFormat: OutputType) => void;
@@ -28,6 +28,7 @@ export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
   const [outputFormat, setOutputFormat] = useState<OutputType>('jpg');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -53,6 +54,10 @@ export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
       handleFile(e.target.files[0]);
+    }
+    // Reset input so the same file can be selected again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
@@ -109,6 +114,7 @@ export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
           onDrop={handleDrop}
         >
           <input
+            ref={fileInputRef}
             type="file"
             id="file-upload"
             className="hidden"
